@@ -4,6 +4,11 @@ view: doc_count {
         doc_type,
         count(distinct raw_file_path) as count
       FROM entities.Entity
+      WHERE doc_type IN('ExternalEval',
+                        'AdditionalRedacted Patient Documents',
+                        'Synthetic Clinical Notes',
+                        'Genetic Tests',
+                        'AdditionalSnippets')
       GROUP BY 1
       ORDER BY 2 DESC
        ;;
