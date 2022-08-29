@@ -11,3 +11,7 @@ explore: entities_view {}
 explore: doc_count {}
 
 explore: tags_table {}
+
+explore: document_table {}
+
+explore: density_score {}

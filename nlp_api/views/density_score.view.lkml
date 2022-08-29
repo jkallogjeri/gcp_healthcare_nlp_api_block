@@ -1,4 +1,4 @@
-view: tags_table {
+view: density_score {
   derived_table: {
     sql: WITH x as (
       SELECT
@@ -55,25 +55,14 @@ view: tags_table {
       'Synthetic Clinical Notes',
       'Genetic Tests',
       'AdditionalSnippets')
-)
+      )
 
       select
-      doc_type,
-      text,
-      automl_file_path,
-      nlp_file_path,
-      raw_file_path,
       replace(replace(file_name, "%20", "_"),"%2F","_") as file_name,
-      preferred_term,
-      vocabulary_codes,
-      subject,
-      confidence,
-      end_offset,
-      start_offset,
-      mentions_text,
-      type,
-      entity_id
+      count(distinct mentions_text) as mentions,
+      count(distinct entity_id) as entities
       FROM x
+      GROUP BY 1
       ;;
   }
 
@@ -82,98 +71,22 @@ view: tags_table {
     drill_fields: [detail*]
   }
 
-  dimension: doc_type {
-    type: string
-    sql: ${TABLE}.doc_type ;;
-  }
-
-  dimension: text {
-    type: string
-    sql: ${TABLE}.text ;;
-  }
-
-  dimension: automl_file_path {
-    type: string
-    sql: ${TABLE}.automl_file_path ;;
-  }
-
-  dimension: nlp_file_path {
-    type: string
-    sql: ${TABLE}.nlp_file_path ;;
-  }
-
-  dimension: raw_file_path {
-    type: string
-    sql: ${TABLE}.raw_file_path ;;
-  }
-
   dimension: file_name {
     type: string
     sql: ${TABLE}.file_name ;;
   }
 
-  dimension: preferred_term {
-    type: string
-    sql: ${TABLE}.preferred_term ;;
-  }
-
-  dimension: vocabulary_codes {
-    type: string
-    sql: ${TABLE}.vocabulary_codes ;;
-  }
-
-  dimension: subject {
-    type: string
-    sql: ${TABLE}.subject ;;
-  }
-
-  dimension: confidence {
+  dimension: mentions {
     type: number
-    sql: ${TABLE}.confidence ;;
+    sql: ${TABLE}.mentions ;;
   }
 
-  dimension: end_offset {
+  dimension: entities {
     type: number
-    sql: ${TABLE}.end_offset ;;
-  }
-
-  dimension: start_offset {
-    type: number
-    sql: ${TABLE}.start_offset ;;
-  }
-
-  dimension: mentions_text {
-    type: string
-    sql: ${TABLE}.mentions_text ;;
-  }
-
-  dimension: type {
-    type: string
-    sql: ${TABLE}.type ;;
-  }
-
-  dimension: entity_id {
-    type: string
-    sql: ${TABLE}.entity_id ;;
+    sql: ${TABLE}.entities ;;
   }
 
   set: detail {
-    fields: [
-      doc_type,
-      text,
-      automl_file_path,
-      nlp_file_path,
-      raw_file_path,
-      file_name,
-      preferred_term,
-      vocabulary_codes,
-      subject,
-      confidence,
-      end_offset,
-      start_offset,
-      mentions_text,
-      type,
-      entity_id
-    ]
+    fields: [file_name, mentions, entities]
   }
 }
