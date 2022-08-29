@@ -8,7 +8,8 @@ view: doc_count {
                         'AdditionalRedacted Patient Documents',
                         'Synthetic Clinical Notes',
                         'Genetic Tests',
-                        'AdditionalSnippets')
+                        'AdditionalSnippets',
+                        'Lab Reports')
       GROUP BY 1
       ORDER BY 2 DESC
        ;;

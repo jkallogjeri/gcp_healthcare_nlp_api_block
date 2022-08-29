@@ -54,7 +54,8 @@ view: tags_table {
       'AdditionalRedacted Patient Documents',
       'Synthetic Clinical Notes',
       'Genetic Tests',
-      'AdditionalSnippets')
+      'AdditionalSnippets',
+      'Lab Reports')
 )
 
       select

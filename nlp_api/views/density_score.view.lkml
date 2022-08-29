@@ -54,7 +54,8 @@ view: density_score {
       'AdditionalRedacted Patient Documents',
       'Synthetic Clinical Notes',
       'Genetic Tests',
-      'AdditionalSnippets')
+      'AdditionalSnippets',
+      'Lab Reports')
       )
 
       select
