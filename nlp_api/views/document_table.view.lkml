@@ -4,7 +4,8 @@ view: document_table {
         gcs_uri as file_name,
         was_ocrd,
         was_abstracted,
-        raw_text
+        raw_text,
+        automl_dataset_url
       FROM entities.Document
        ;;
   }
@@ -34,7 +35,16 @@ view: document_table {
     sql: ${TABLE}.raw_text ;;
   }
 
+  dimension: automl_dataset_url {
+    link: {
+      label: "Automl Dataset"
+      url: "{{ value }}"
+      icon_url: "http://google.com/favicon.ico"
+    }
+    sql: ${TABLE}.automl_dataset_url ;;
+  }
+
   set: detail {
-    fields: [file_name, was_ocrd, was_abstracted, raw_text]
+    fields: [file_name, was_ocrd, was_abstracted, raw_text, automl_dataset_url]
   }
 }
